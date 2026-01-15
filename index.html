@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXO Reality | Million Dollar Listing</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle" style="color:var(--accent); font-size:1.5rem;"></i>
+        <div><h4 style="margin:0; font-size:1rem;" id="toastTitle">Úspešne odoslané</h4></div>
+    </div>
+
+    <div id="promoPopup" class="promo-popup">
+        <div class="close-promo" onclick="closePromo()">&times;</div>
+        <h4 data-key="ad_title">Investičná príležitosť</h4>
+        <p style="font-size:0.9rem; margin-bottom:15px; color:#ccc;" data-key="ad_text">Nové apartmány v Dubaji s výnosom až 12% ročne. Limitovaná ponuka.</p>
+        <button class="btn btn-sm btn-full" onclick="showToast('Viac info v maili')" data-key="ad_btn">Zistiť viac</button>
+    </div>
+
+    <nav>
+        <div style="font-family:'Space Grotesk'; font-size:1.8rem; font-weight:700;">NEXO<span style="color:var(--accent)">.</span></div>
+        <div class="nav-links">
+            <a href="#ponuka" data-key="nav_buy">Kúpiť</a>
+            <a href="#chcem-predat" data-key="nav_sell">Predať</a>
+            <a href="#makleri" data-key="nav_agents">Makléri</a>
+            <a href="#kariera" data-key="nav_career">Kariéra</a>
+        </div>
+        <div class="nav-right">
+            <select id="languageSelector" class="search-select" style="padding: 8px 15px; background: transparent; color: lab(41.7% 28.31 -66.15); border: 1px solid rgba(255,255,255,0.3);" onchange="changeLanguage(this.value)">
+                <option value="sk">🇸🇰 SK</option>
+                <option value="en">🇬🇧 EN</option>
+            </select>
+            <button class="btn btn-outline" onclick="document.getElementById('kontakt').scrollIntoView()" data-key="contact">Kontakt</button>
+        </div>
+    </nav>
+
+    <header>
+        <div class="container" style="position:relative; z-index:2; width:100%;">
+            <span class="subtitle" data-key="hero_subtitle">Premium Real Estate</span>
+            <h1 style="font-size: clamp(3rem, 7vw, 6rem); line-height: 1; margin-bottom: 2rem;">
+                <span data-key="hero_title_1">Nájdite svoj</span><br>
+                <span data-key="hero_title_2">nový</span> <span style="color:var(--accent); font-style:italic;" data-key="hero_title_3">Domov</span>.
+            </h1>
+            <div class="search-widget">
+                <div class="search-item">
+                    <span class="search-label" data-key="search_loc">Lokalita</span>
+                    <select id="searchLoc" class="search-select">
+                        <option value="all">Všetky lokality</option>
+                        <option value="stare-mesto">Staré Mesto</option>
+                        <option value="koliba">Koliba</option>
+                        <option value="ruzinov">Ružinov</option>
+                    </select>
+                </div>
+                <div class="search-item">
+                    <span class="search-label" data-key="search_type">Typ</span>
+                    <select id="searchType" class="search-select">
+                        <option value="all" data-key="opt_all_types">Všetky typy</option>
+                        <option value="byt" data-key="opt_flat">Byt / Apartmán</option>
+                        <option value="dom" data-key="opt_house">Dom / Vila</option>
+                    </select>
+                </div>
+                <div class="search-item">
+                    <span class="search-label" data-key="search_price_from">Cena od</span>
+                    <select id="searchPriceFrom" class="search-select">
+                        <option value="0" data-key="opt_min">0 €</option>
+                        <option value="100000">100.000 €</option>
+                        <option value="200000">200.000 €</option>
+                        <option value="300000">300.000 €</option>
+                        <option value="500000">500.000 €</option>
+                        <option value="700000">700.000 €</option>
+                    </select>
+                </div>
+                <div class="search-item">
+                    <span class="search-label" data-key="search_price_to">Cena do</span>
+                    <select id="searchPriceTo" class="search-select">
+                        <option value="100000000" data-key="opt_max">Max</option>
+                        <option value="200000">200.000 €</option>
+                        <option value="400000">400.000 €</option>
+                        <option value="600000">600.000 €</option>
+                        <option value="800000">800.000 €</option>
+                        <option value="1000000">1.000.000 €</option>
+                    </select>
+                </div>
+                <button class="search-btn" onclick="filterProperties()">
+                    <i class="fas fa-search"></i> <span data-key="btn_search">Hľadať</span>
+                </button>
+            </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop" class="hero-bg">
+    </header>
+
+    <section id="ponuka" class="section-padding container">
+        <div class="text-center" style="margin-bottom: 4rem;">
+            <span class="subtitle" data-key="portfolio">Portfólio</span>
+            <h2 data-key="exclusive_offer">Exkluzívna Ponuka</h2>
+        </div>
+        <div class="grid prop-grid" id="propertyList"></div>
+        <div class="text-center" style="margin-top: 3rem;">
+            <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMore()" data-key="btn_load_more">Načítať ďalšie ponuky</button>
+        </div>
+    </section>
+
+    <section id="chcem-predat" class="section-padding container">
+        <div class="sell-wrapper">
+            <div>
+                <span class="subtitle" data-key="sell_subtitle">Predajte s nami</span>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;" data-key="sell_title">Máte nehnuteľnosť na predaj?</h2>
+                <p style="margin-bottom: 2rem;" data-key="sell_desc">Zabezpečíme vám najvyššiu možnú trhovú cenu.</p>
+                <ul class="sell-features">
+                    <li><i class="fas fa-check-circle"></i> <span data-key="feat_valuation">Bezplatné ocenenie nehnuteľnosti</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-key="feat_marketing">Profesionálne foto & video</span></li>
+                </ul>
+            </div>
+            <div>
+                <form id="formSell" onsubmit="submitData(event, 'sell')">
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="text" name="location" class="form-input" data-placeholder="ph_location" placeholder="Lokalita (napr. Ružinov)" required>
+                        <select name="type" class="form-select">
+                            <option value="Byt" data-key="opt_flat">Byt</option>
+                            <option value="Dom" data-key="opt_house">Dom</option>
+                            <option value="Pozemok" data-key="opt_land">Pozemok</option>
+                        </select>
+                    </div>
+                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <input type="number" name="area" class="form-input" data-placeholder="ph_area" placeholder="Plocha m²">
+                        <input type="number" name="price" class="form-input" data-placeholder="ph_price" placeholder="Cena (predstava)">
+                    </div>
+                    <input type="text" name="name" class="form-input" data-placeholder="ph_name" placeholder="Vaše Meno" required>
+                    <input type="tel" name="phone" class="form-input" data-placeholder="ph_phone" placeholder="Váš Telefón" required>
+                    <button type="submit" class="btn btn-full" style="margin-top: 10px;" data-key="btn_send_offer">Odoslať ponuku</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="makleri" class="section-padding container">
+        <div class="text-center">
+            <span class="subtitle" data-key="agents_subtitle">Náš Tím</span>
+            <h2 data-key="agents_title">Top Realitní Makléri</h2>
+        </div>
+        <div class="grid agent-grid">
+            <div class="agent-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800" class="agent-img">
+                <div class="agent-info">
+                    <span class="agent-name">Ing. Martin Novák</span>
+                    <span class="agent-role">Senior Broker</span>
+                    <div class="agent-actions">
+                        <a href="tel:+421900123456" class="btn-action"><i class="fas fa-phone-alt"></i> Zavolať</a>
+                        <a href="mailto:martin@nexo.sk" class="btn-action"><i class="fas fa-envelope"></i> Napísať</a>
+                    </div>
+                </div>
+            </div>
+            <div class="agent-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" class="agent-img">
+                <div class="agent-info">
+                    <span class="agent-name">Mgr. Elena Kráľová</span>
+                    <span class="agent-role">Luxury Specialist</span>
+                    <div class="agent-actions">
+                        <a href="tel:+421900654321" class="btn-action"><i class="fas fa-phone-alt"></i> Zavolať</a>
+                        <a href="mailto:elena@nexo.sk" class="btn-action"><i class="fas fa-envelope"></i> Napísať</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-padding">
+        <div class="grid" style="grid-template-columns: 1fr 1fr; gap:4rem; align-items:center;">
+            <div>
+                <span class="subtitle" data-key="digital_staging">Digitálny Homestaging</span>
+                <h2 data-key="before_after">Pred/Po Rekonštrukcii</h2>
+                <div style="display:flex; gap:20px; margin-top:2rem;">
+                    <div><h3 style="color:var(--accent); font-size:2rem;">+20%</h3><span style="font-size:0.8rem; text-transform:uppercase;" data-key="price_increase">Nárast ceny</span></div>
+                </div>
+            </div>
+            <div class="comparison-container">
+                <div class="img-comp-img"><img src="https://images.unsplash.com/photo-1600210491892-03d54cc0ebce?q=80&w=1600&auto=format&fit=crop"></div>
+                <div class="img-comp-img img-comp-overlay"><img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?q=80&w=1600&auto=format&fit=crop"></div>
+                <div class="slider-bar"><i class="fas fa-arrows-alt-h" style="color:white;"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kariera" class="section-padding container">
+        <div class="text-center" style="margin-bottom: 3rem;">
+            <span class="subtitle" data-key="career_subtitle">Kariéra</span>
+            <h2 data-key="career_title">Pridajte sa k elitám</h2>
+        </div>
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div class="job-card">
+                <div><div class="job-title">Realitný Maklér - Senior</div><div class="job-tags"><span class="job-tag">Bratislava</span></div></div>
+                <button class="btn btn-outline" onclick="openCareerModal('Realitný Maklér - Senior')" data-key="btn_apply">Aplikovať</button>
+            </div>
+        </div>
+    </section>
+
+    <footer id="kontakt" style="background:#000; padding:5rem 0; border-top:1px solid #222;">
+        <div class="container grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div><h3 style="margin-bottom:1rem;">NEXO.</h3></div>
+            <div>
+                <h4 style="font-size:1rem; margin-bottom:1rem;" data-key="contact_header">Kontakt</h4>
+                <p style="color:#888;">hello@nexoreality.sk</p>
+                <p style="color:#888;">+421 900 123 456</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="close-modal" onclick="closeDetailModal()">&times;</div>
+            <div class="modal-left">
+                <img id="modalMainImg" src="" class="main-img">
+                <div style="padding:2rem;">
+                    <h3 data-key="prop_desc_title">Popis nehnuteľnosti</h3>
+                    <p id="modalDesc" style="color:#aaa; font-size:0.9rem; margin-top:1rem; line-height:1.8;"></p>
+                </div>
+            </div>
+            <div class="modal-right">
+                <span id="modalTag" style="color:var(--accent); font-weight:700; text-transform:uppercase;">TAG</span>
+                <h1 id="modalTitle" style="font-size:2.5rem; line-height:1.1; margin: 1rem 0;">Title</h1>
+                <span id="modalPrice" style="font-size:2rem; font-weight:700; color:white;">Price</span>
+                <hr style="border:0; border-top:1px solid #333; margin:2rem 0;">
+                
+                <form id="formBooking" onsubmit="submitData(event, 'booking')">
+                    <input type="hidden" name="property_title" id="inputPropTitle">
+                    
+                    <div class="calendar-wrapper">
+                        <span class="cal-label"><i class="far fa-calendar-alt"></i> Vyberte termín</span>
+                        <div class="date-grid" id="calendarDates"></div>
+                        <div class="time-grid" id="calendarTimes">
+                            <div class="time-pill" onclick="selectTime(this)">09:00</div>
+                            <div class="time-pill" onclick="selectTime(this)">11:00</div>
+                            <div class="time-pill" onclick="selectTime(this)">14:00</div>
+                            <div class="time-pill" onclick="selectTime(this)">16:30</div>
+                        </div>
+                        <input type="hidden" name="selected_date" id="inputDate">
+                        <input type="hidden" name="selected_time" id="inputTime">
+                    </div>
+
+                    <input type="text" name="name" class="form-input" data-placeholder="ph_name" placeholder="Meno a Priezvisko" required>
+                    <input type="text" name="phone" class="form-input" data-placeholder="ph_phone" placeholder="Telefón" required>
+                    <button type="submit" class="btn btn-full" data-key="btn_confirm">Potvrdiť termín</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="careerModal" class="modal-overlay">
+        <div class="modal-window small-modal">
+            <div class="close-modal" onclick="closeCareerModal()">&times;</div>
+            <h2 style="margin-bottom:1.5rem;" data-key="modal_career_title">Odoslať žiadosť</h2>
+            <p style="color:#888; margin-bottom:1.5rem;" id="careerPositionTitle">Pozícia</p>
+            <form id="formCareer" onsubmit="submitData(event, 'career')">
+                <input type="hidden" name="position" id="inputPosition">
+                <input type="text" name="name" class="form-input" data-placeholder="ph_name" placeholder="Meno a Priezvisko" required>
+                <input type="email" name="email" class="form-input" placeholder="Email" required>
+                <input type="text" name="linkedin" class="form-input" data-placeholder="ph_cv" placeholder="Link na LinkedIn / CV">
+                <textarea name="message" class="form-textarea" rows="4" data-placeholder="ph_why" placeholder="Prečo práve vy?"></textarea>
+                <button type="submit" class="btn btn-full" data-key="btn_send_app">Odoslať žiadosť</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

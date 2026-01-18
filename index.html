@@ -11,6 +11,109 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Oprava hlavného rámika vyhľadávania */
+        .search-widget {
+            background-color: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 30px;
+            
+            /* Rozloženie prvkov vedľa seba */
+            display: flex; 
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 15px;
+            
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Jednotlivé položky (Lokalita, Typ...) */
+        .search-item {
+            flex: 1;
+            min-width: 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Nadpisy (Lokalita, Typ...) */
+        .search-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #aaa;
+            margin-left: 15px;
+        }
+
+        /* Samotné výberové políčka (biele ovály) */
+        .search-select {
+            width: 100%;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            appearance: none;
+            cursor: pointer;
+            
+            /* Vlastná šípka */
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px top 50%;
+            background-size: 10px auto;
+        }
+
+        /* Tlačidlo Hľadať */
+        .search-btn {
+            background-color: #2563eb; /* Modrá */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            height: 48px; /* Rovnaká výška ako inputy */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .search-btn:hover {
+            background-color: #1d4ed8;
+            transform: scale(1.02);
+        }
+
+        /* --- MOBILNÁ VERZIA --- */
+        @media (max-width: 768px) {
+            .search-widget {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .search-item {
+                width: 100%;
+            }
+
+            .search-btn {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -35,7 +138,7 @@
             <a href="#kariera" data-key="nav_career">Kariéra</a>
         </div>
         <div class="nav-right">
-            <select id="languageSelector" class="search-select" style="padding: 8px 15px; background: transparent; color: lab(41.7% 28.31 -66.15); border: 1px solid rgba(255,255,255,0.3);" onchange="changeLanguage(this.value)">
+            <select id="languageSelector" class="search-select" style="padding: 8px 15px; background: transparent; color: lab(41.7% 28.31 -66.15); border: 1px solid rgba(255,255,255,0.3); width: auto; height: auto;" onchange="changeLanguage(this.value)">
                 <option value="sk">🇸🇰 SK</option>
                 <option value="en">🇬🇧 EN</option>
             </select>
@@ -50,6 +153,7 @@
                 <span data-key="hero_title_1">Nájdite svoj</span><br>
                 <span data-key="hero_title_2">nový</span> <span style="color:var(--accent); font-style:italic;" data-key="hero_title_3">Domov</span>.
             </h1>
+            
             <div class="search-widget">
                 <div class="search-item">
                     <span class="search-label" data-key="search_loc">Lokalita</span>
@@ -94,6 +198,7 @@
                     <i class="fas fa-search"></i> <span data-key="btn_search">Hľadať</span>
                 </button>
             </div>
+
         </div>
         <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop" class="hero-bg">
     </header>
